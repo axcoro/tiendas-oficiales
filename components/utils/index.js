@@ -15,7 +15,7 @@
     // it should return true if the received parameter is an object
     // and is distinct to null or return false otherwise
     function isObject(thing) {
-        return typeof thing === 'object' && thing !=== null;
+        return typeof thing === 'object' && thing !== null;
     }
 
     function ensureIsArray(name, value) {
@@ -74,11 +74,11 @@
     // example: getQueryStr({ a: 1, b:'hola'}); // -> 'a=1&b=hola'
     function getQueryStr(obj) {
         
-        return Object.keys(obj).reduce(function(a, k) {
+        return Object.keys(obj).reduce(function(arr, key) {
             
-            a.push(k + '=' + encodeURIComponent(obj[k]));
+            arr.push(key + '=' + encodeURIComponent(obj[key]));
             
-            return a;
+            return arr;
 
         }, []).join('&');
     }
