@@ -73,7 +73,7 @@
     // should be avoided in the resulting string
     // example: getQueryStr({ a: 1, b:'hola'}); // -> 'a=1&b=hola'
     function getQueryStr(obj) {
-        var val:
+        var val;
         return Object.keys(obj).reduce(function(arr, key) {
             
             val = obj[key];
