@@ -1,5 +1,5 @@
-(function ( root, factory ) {
-  if ( typeof module === "object" && module.exports ) {
+(function(root, factory) {
+    if (typeof module === "object" && module.exports) {
         // Node, or CommonJS-Like environments
         // Intentionally returning a factory method
         module.exports = function(app) {
@@ -8,13 +8,14 @@
     } else {
         // Browser globals
         root.app.components = {}; // <- extend
-        factory( root.app.components.utils = {}, root );
+        factory(root.app.components.utils = {}, root);
     }
-})( typeof global !== "undefined" ? global : this.window || this.global, function ( exports, global) {
+})(typeof global !== "undefined" ? global : this.window || this.global, function(exports, global) {
 
     // it should return true if the received parameter is an object
     // and is distinct to null or return false otherwise
     function isObject(thing) {
+        return typeof thing === 'object' && thing !=== null;
     }
 
     function ensureIsArray(name, value) {
@@ -72,13 +73,22 @@
     // should be avoided in the resulting string
     // example: getQueryStr({ a: 1, b:'hola'}); // -> 'a=1&b=hola'
     function getQueryStr(obj) {
+        
+        return Object.keys(obj).reduce(function(a, k) {
+            
+            a.push(k + '=' + encodeURIComponent(obj[k]));
+            
+            return a;
+
+        }, []).join('&');
     }
 
 
     // it should return the HTML element filled up with the
     // correct values. each mapping is marked as 
     // '{{item.propertyName}}' and should be replaced
-    function apiResultToHTML (apiElement) {
+    function apiResultToHTML(apiElement) {
+
         var itemHTML = '<li class="list-item"><div class="item-segment item-image">\
           <div class="inner-item-segment">\
             <img class="item-img" src="{{item.thumbnail}}" alt="">\
@@ -101,7 +111,23 @@
           </div>\
         </div></li>';
 
-        //// add code here ////
+        function replace(prop, value, itemHTML) {
+            debugger;
+            if (typeof value !== 'object') {
+                return itemHTML.replace(new RegExp('{{' + prop + '}}', 'g'), value);
+            } else {
+                var o, targetProp;
+                for (var key in value) {
+                    if (value.hasOwnProperty(key)) {
+                        targetProp = prop + '.' + key;
+                        itemHTML = replace(targetProp, value[key], itemHTML);
+                    }
+                }
+                return itemHTML;
+            }
+        }
+
+        return replace('item', apiElement, itemHTML);
     }
 
     exports.isObject = isObject;
