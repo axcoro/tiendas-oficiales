@@ -78,7 +78,7 @@
             
             val = obj[key];
 
-            if(val !=== undefined){
+            if(val !== undefined){
                 arr.push(key + '=' + encodeURIComponent(val));
             }
             
