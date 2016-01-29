@@ -112,7 +112,6 @@
         </div></li>';
 
         function replace(prop, value, itemHTML) {
-            debugger;
             if (typeof value !== 'object') {
                 return itemHTML.replace(new RegExp('{{' + prop + '}}', 'g'), value);
             } else {
