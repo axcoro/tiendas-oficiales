@@ -15,8 +15,10 @@
         searchListener(searchInput.value);
     }
 
-    function onSearchKeyPressed(keyPressedListener, event) {
-        keyPressedListener(event.keyCode);
+    function onSearchKeyPressed(searchInput, searchListener, event) {
+        if(event.keyCode === 13) {
+            searchListener(searchInput.value);
+        }
     }
 
 
@@ -49,7 +51,7 @@
 
     function ensureListeners(listeners) {
 
-        var eventNames = [ "search", "keypress" ];
+        var eventNames = [ "search" ];
 
         utils.ensureIsObjectAndHasMethods(
             eventNames,
@@ -89,6 +91,11 @@
     // it should remove the listeners added on the constructor
     // hint: the ui module has a util method for removing listeners
     Searcher.prototype.destroy = function() {
+    };
+
+    // it should return the value of the component
+    // hint: which node has value?
+    Searcher.prototype.getValue = function() {
     };
 
     uiComponents.Searcher = Searcher;

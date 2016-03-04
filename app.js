@@ -30,7 +30,7 @@
           filter: function(ranges) {
               exports.components.ui.clearNodeInnerHTML(listItemContainer);
               exports.components.api.search({
-                data: searchInput.value,
+                data: searcher.getValue(),
                 price: ranges.min + '-' + ranges.max
               }).then(function(result) {
                 insertResults(result.results);
@@ -53,12 +53,6 @@
           }).then(function(result) {
             insertResults(result.results);
           });
-        },
-        keypress: function(keyCode) {
-          var click = new CustomEvent('click');
-          if(keyCode === 13) {
-            searchButton.dispatchEvent(click);
-          }
         }
       };
       var searcher = new exports.uiComponents.Searcher(searcherNodes, searcherListeners);
